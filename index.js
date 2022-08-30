@@ -1,4 +1,5 @@
 import express from "express"
+import csrf from "csurf"
 import cors from "cors"
 import cookieParser from "cookie-parser"
 import morgan from "morgan"
@@ -11,6 +12,7 @@ const app = express();
 app.use(express.urlencoded({extended: true}))
 app.use(cors())
 app.use(cookieParser());
+app.use(csrf({cookie:true}))
 app.use(morgan("dev"));
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
