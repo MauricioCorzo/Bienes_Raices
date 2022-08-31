@@ -12,7 +12,7 @@ const app = express();
 app.use(express.urlencoded({extended: true}))
 app.use(cors())
 app.use(cookieParser());
-app.use(csrf({cookie:true}))
+app.use(csrf({cookie:true})) // lo dejamos disponible globalemente, es algo de seguridad, no es muy necesario
 app.use(morgan("dev"));
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
