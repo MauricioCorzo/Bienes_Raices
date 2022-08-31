@@ -1,13 +1,67 @@
 import bcrypt from "bcrypt"
 import { check, validationResult } from "express-validator"
 import { emailOlvidePassword, emailRegistro } from "../helpers/emails.js"
-import { generarId } from "../helpers/tokens.js"
+import { generarId , generarJWT} from "../helpers/tokens.js"
 import Usuario from "../models/Usuario.js"
 
 const formularioLogin = (req ,res) => {
     res.render("auth/login", {
-        pagina: "Iniciar Sesion"
+        pagina: "Iniciar Sesion",
+        csrfToken: req.csrfToken()
     })
+}
+
+const autenticar = async (req,res) => {
+    const { email , password } = req.body
+
+    try {
+      await check("email").isEmail().withMessage("El email es obligatorio").run(req)
+      await check("password").notEmpty().withMessage("La contraseña es obligatoria").run(req)
+
+      let resultado = validationResult(req)
+
+      if(!resultado.isEmpty()){
+        return res.render("auth/login", {
+        pagina: "Iniciar Sesion",
+        csrfToken: req.csrfToken(),
+        errores: resultado.array(),
+    })
+  }
+
+  const usuario = await Usuario.findOne({where:{email:email}})
+
+  if(!usuario){
+    return res.render("auth/login",{
+      pagina: "Iniciar Sesion",
+      csrfToken: req.csrfToken(),
+      errores: [{msg: "El usuario no existe"}]
+    })
+  }
+
+  if(!usuario.confirmado){
+    return res.render("auth/login",{
+      pagina: "Iniciar Sesion",
+      csrfToken: req.csrfToken(),
+      errores: [{msg: "Aun no has confirmado tu cuenta. Revisa tu email"}]
+    })
+  }
+
+  //Revisar password. La funcion ya la tiene en el prototype del objeto Usuario
+  if(!usuario.verificarPassword(password)){
+    return res.render("auth/login",{
+      pagina: "Iniciar Sesion",
+      csrfToken: req.csrfToken(),
+      errores: [{msg: "La contraseña es incorrecta"}]
+    })
+  }
+  
+  const token = generarJWT({ id: usuario.id, nombre: usuario.nombre})
+  console.log(token)
+
+
+    } catch (error) {
+      console.log(error)
+    }
 }
 
 const formularioRegistro = (req, res) => {
@@ -220,5 +274,6 @@ export {
     confirmar,
     resetearPassword,
     comprobarToken,
-    nuevoPassword
+    nuevoPassword,
+    autenticar
 }
