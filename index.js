@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser"
 import morgan from "morgan"
 import db from "./config/db.js"
 import usersRoutes from "./routes/usuarioRoutes.js"
+import propiedadesRoutes from "./routes/propiedadesRoutes.js"
 
 const app = express();
 
@@ -41,6 +42,8 @@ app.use( express.static("public"))
 
 
 app.use("/auth", usersRoutes)
+app.use("/", propiedadesRoutes)
+
 
 app.use((err, req, res, next) => {
   // eslint-disable-line no-unused-vars
