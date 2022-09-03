@@ -32,7 +32,7 @@
 
         // Leer la info de las calles al soltar el Pin
         geocodeService.reverse().latlng(posicion, 13).run((error,result) => {
-            console.log(result)
+            // console.log(result)
 
             marker.bindPopup(result.address.LongLabel)
 
