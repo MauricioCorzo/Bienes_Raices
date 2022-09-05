@@ -1,14 +1,15 @@
 import express  from "express";
 import { body } from "express-validator" // Es la validacion en el router y no en el controlador. Aqui se usa body, en el controller se usa check
 import { admin, crear, guardar } from "../controllers/propiedadController.js";
+import protegerRuta from "../middleware/protegerRuta.js";
 
 const propiedadesRoutes = express.Router()
 
-propiedadesRoutes.get("/mis-propiedades", admin)
+propiedadesRoutes.get("/mis-propiedades", protegerRuta, admin)
 
-propiedadesRoutes.get("/propiedades/crear", crear)
+propiedadesRoutes.get("/propiedades/crear", protegerRuta, crear)
 
-propiedadesRoutes.post("/propiedades/crear",
+propiedadesRoutes.post("/propiedades/crear", protegerRuta,
     body("titulo").notEmpty().withMessage("El titulo del anuncio es obligatorio"),
     body("descripcion").notEmpty().withMessage("La descripcion no puede ir vacia"),
     body("categoria").isNumeric().withMessage("Selecciona una categoria"),   // usamos isNumeric porque el value en crear.pug es el id de cada categoria
