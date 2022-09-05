@@ -37,14 +37,14 @@ block contenido
                             select#categoria.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(name="categoria")
                                 option(value="") - Seleccione - 
                                 each categoria in categorias
-                                    option(value=categoria.id)= categoria.nombre 
+                                    option(value=categoria.id selected= datos.categoria ? datos.categoria == categoria.id : null)= categoria.nombre 
 
                         div(class="md:w-1/2") 
                             label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="precio") Precio
                             select#precio.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(name="precio")
                                 option(value="") - Seleccione -
                                 each precio in precios 
-                                    option(value=precio.id)= precio.nombre  
+                                    option(value=precio.id selected= datos.precio ? datos.precio == precio.id : null)= precio.nombre  
 
                     div(class="md:flex md:gap-4 space-y-5 md:space-y-0")
 
@@ -54,7 +54,7 @@ block contenido
                                 option(value="") - Seleccione -
                                 - let h = 1;
                                     while h  < 5
-                                        option(value=h) #{h++}
+                                        option(value=h selected= datos.habitaciones ? datos.habitaciones == h : null) #{h++}
 
                         div(class="md:w-1/3") 
                             label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="estacionamiento") Estacionamiento
@@ -62,7 +62,7 @@ block contenido
                                 option(value="") - Seleccione -
                                 - let e = 1;
                                     while e < 4
-                                        option(value=e) #{e++} 
+                                        option(value=e selected= datos.estacionamiento ? datos.estacionamiento == e : null) #{e++} 
 
                         div(class="md:w-1/3") 
                             label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="wc") Wc
@@ -70,7 +70,7 @@ block contenido
                                 option(value="") - Seleccione -
                                 - let w = 1;
                                     while w < 5
-                                        option(value=w) #{w++}
+                                        option(value=w selected= datos.wc ? datos.wc == w : null) #{w++}
 
                     div(class="border-gray-200 border-t py-5 space-y-5")
                         h3(class="text-lg leading-6 font-medium text-gray-900") Ubicación
@@ -79,11 +79,11 @@ block contenido
                         div#mapa.h-96
 
                         div
-                            p(class="calle")
+                            p(class="calle")= datos.calle ? datos.calle : ""
 
-                        input(type="hidden" name="calle" id="calle")
-                        input(type="hidden" name="lat" id="lat")
-                        input(type="hidden" name="lng" id="lng")
+                        input(type="hidden" name="calle" id="calle" value= datos.calle ? datos.calle : "")
+                        input(type="hidden" name="lat" id="lat" value= datos.lat ? datos.lat : "")
+                        input(type="hidden" name="lng" id="lng" value= datos.lng ? datos.lng : "")
 
                     input(class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 rounded uppercase text-white font-bold cursor-pointer" type="submit" value="Añadir Imagen")
 

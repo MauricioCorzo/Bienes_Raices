@@ -26,6 +26,7 @@ const crear = async (req,res) => {
 
 const guardar = async(req,res) => {
 
+    // console.log(req.body)
     // Validacion del post
     let resultado = validationResult(req)
 
