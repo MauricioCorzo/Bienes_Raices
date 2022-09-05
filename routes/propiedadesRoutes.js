@@ -1,6 +1,6 @@
 import express  from "express";
 import { body } from "express-validator" // Es la validacion en el router y no en el controlador. Aqui se usa body, en el controller se usa check
-import { admin, crear, guardar } from "../controllers/propiedadController.js";
+import { admin, agregarImagen, crear, guardar } from "../controllers/propiedadController.js";
 import protegerRuta from "../middleware/protegerRuta.js";
 
 const propiedadesRoutes = express.Router()
@@ -19,6 +19,8 @@ propiedadesRoutes.post("/propiedades/crear", protegerRuta,
     body("wc").isNumeric().withMessage("Selecciona la cantidad de baños"),
     body("lat").notEmpty().withMessage("Ubica la propiedad en el mapa"),
     guardar)
+
+propiedadesRoutes.get("/propiedades/agregar-imagen/:id", agregarImagen)    
 
 
 
