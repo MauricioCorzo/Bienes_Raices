@@ -11,9 +11,9 @@ block contenido
 
         div(class="bg-white shadow py-8 px-4 rounded mx-auto max-w-4xl my-10 md:px-10")
             form(id="imagen" class="dropzone border-dashed border-2 w-full min:h-96 h-auto rounded flex-col justify-center items-center" method="POST" action=`/propiedades/agregar-imagen/${propiedad.id}`)
-                input(type="hidden" name="_csrf" value= csrfToken)
+                input(id="DropZone" type="hidden" name="_csrf" value= csrfToken)
 
-            input(class="w-full py-3 mt-5 bg-indigo-600 hover:bg-indigo-700 rounded uppercase text-white font-bold cursor-pointer" type="submit" value="Publicar Propiedad")
+            button(id="publicar" class="w-full py-3 mt-5 bg-indigo-600 hover:bg-indigo-700 rounded uppercase text-white font-bold cursor-pointer" type="button") Publicar Propiedad
 
 block scripts
     script(src="/js/agregarImagen.js")
