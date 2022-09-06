@@ -71,16 +71,36 @@ const guardar = async(req,res) => {
 }
 
 const agregarImagen = async (req,res) => {
+    const { id } = req.params;
+    const { usuario } = req;
+
+    //Validar que la propiedad exista
+    const propiedad = await Propiedad.findByPk(id);
+    if(!propiedad){
+        return res.redirect("/mis-propiedades")
+    };
+
+    //Validar que no este publicada(tiene que ser false)
+    if(propiedad.publicado){
+        return res.redirect("/mis-propiedades")
+    };
+
+    //Validar que la propiedad pertenece a quien visita la pagina. Al comparar id es recomendable pasarlos a toString()
+    // porque algunos ORM´s los evalua como objetos y siempre daria false aunque los id´s sean iguales
+    if(usuario.id.toString() !== propiedad.usuarioId.toString()){
+        return res.redirect("/mis-propiedades")
+    };
 
     res.render("propiedades/agregar-imagen", {
-        pagina: "Agregar Imagen",
+        pagina: `Agregar Imagen a: "${propiedad.titulo}"`,
+        propiedad: propiedad
         // csrfToken: req.csrfToken(),
-    })
-}
+    });
+};
 
 export {
     admin,
     crear,
     guardar, 
     agregarImagen
-}
+};

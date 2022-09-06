@@ -4,7 +4,7 @@ import { Usuario } from "../models/index.js";
 const protegerRuta = async (req,res,next) => {
 
     //Verificar si hay un token
-    let { _token} = req.cookies;
+    let { _token } = req.cookies;
 
     if(!_token){
         return res.redirect("/auth/login")

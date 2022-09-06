@@ -20,7 +20,7 @@ propiedadesRoutes.post("/propiedades/crear", protegerRuta,
     body("lat").notEmpty().withMessage("Ubica la propiedad en el mapa"),
     guardar)
 
-propiedadesRoutes.get("/propiedades/agregar-imagen/:id", agregarImagen)    
+propiedadesRoutes.get("/propiedades/agregar-imagen/:id", protegerRuta, agregarImagen)    
 
 
 
