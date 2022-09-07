@@ -2,11 +2,23 @@ import { Propiedad , Precio , Categoria } from "../models/index.js"
 import { validationResult } from "express-validator"
 
 
-const admin = (req,res) => {
-    res.render("propiedades/admin", {
-        pagina: "Mis Propiedades"
+const admin = async (req,res) => {
+    const { usuario } = req;
+
+    const propiedades = await Propiedad.findAll({
+        where: { 
+            usuarioId: usuario.id 
+        }, include: [
+            { model: Categoria}, // se le puede agregar esto : , as: "categoria" (para llamarlo como queramos)
+            { model: Precio}
+        ]
     })
-} 
+
+    res.render("propiedades/admin", {
+        pagina: "Mis Propiedades",
+        propiedades: propiedades
+    });
+};
 
 const crear = async (req,res) => {
     // Consultar Modelo de Precio Y Categoria
