@@ -148,10 +148,100 @@ const almacenarImagen = async (req,res) => {
     }
 }
 
+const editar = async (req,res) => {
+    const { id } = req.params;
+    const { usuario } = req;
+
+    //Validar que la propiedad exista
+    const propiedad = await Propiedad.findByPk(id);
+    if(!propiedad){
+        return res.redirect("/mis-propiedades")
+    };
+
+    //Revisar que el usuario sea el que creó la propiedad
+    if(usuario.id.toString() !== propiedad.usuarioId.toString()){
+        return res.redirect("/mis-propiedades")
+    };
+
+    // Consultar Modelo de Precio Y Categoria
+    const [categorias, precios] = await Promise.all([Categoria.findAll(), Precio.findAll()]);
+
+    res.render("propiedades/editar", {
+        pagina: `Editar Propiedad: "${propiedad.titulo}"`,
+        csrfToken: req.csrfToken(),
+        categorias: categorias,
+        precios: precios,
+        datos: propiedad
+    });
+}
+
+
+const guardarCambios = async (req,res) => {
+    const { id } = req.params;
+    const { usuario } = req;
+
+    // Validacion del post
+    let resultado = validationResult(req);
+
+    if(!resultado.isEmpty()){
+        const [categorias, precios] = await Promise.all([Categoria.findAll(), Precio.findAll()]); // Se require pq si hay error en el post del form igualmente tenemos que tener 
+        // las categorias y precios
+
+        return res.render("propiedades/editar", {
+            pagina: `Editar Propiedad`,
+            csrfToken: req.csrfToken(),
+            categorias: categorias,
+            precios: precios,
+            errores: resultado.array(),
+            datos: req.body
+
+        });
+    };
+
+    //Validar que la propiedad exista
+    const propiedad = await Propiedad.findByPk(id);
+    if(!propiedad){
+        return res.redirect("/mis-propiedades")
+    };
+
+    //Revisar que el usuario sea el que creó la propiedad
+    if(usuario.id.toString() !== propiedad.usuarioId.toString()){
+        return res.redirect("/mis-propiedades")
+    };
+
+    //Actualizar Propiedad
+    try {
+        const { titulo , descripcion, habitaciones , estacionamiento , wc , calle , lat , lng, precio, categoria} = req.body;
+
+        //Casi Igual que en crear, set es un metodo de sequelize. No le pasamos la imagen ni usuario id pa ya los tenemos
+       propiedad.set({
+            titulo: titulo,
+            descripcion: descripcion,
+            habitaciones: habitaciones,
+            estacionamiento: estacionamiento,
+            wc: wc,
+            calle: calle,
+            lat: lat,
+            lng: lng,
+            precioId: precio,
+            categoriaId: categoria,
+        })
+
+        await propiedad.save()
+
+        res.redirect("/mis-propiedades")
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 export {
     admin,
     crear,
     guardar, 
     agregarImagen,
-    almacenarImagen
+    almacenarImagen,
+    editar,
+    guardarCambios
 };
