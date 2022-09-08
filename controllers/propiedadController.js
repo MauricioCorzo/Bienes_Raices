@@ -1,5 +1,6 @@
 import { Propiedad , Precio , Categoria } from "../models/index.js"
 import { validationResult } from "express-validator"
+import { unlink } from "node:fs/promises"
 
 
 const admin = async (req,res) => {
@@ -16,6 +17,7 @@ const admin = async (req,res) => {
 
     res.render("propiedades/admin", {
         pagina: "Mis Propiedades",
+        csrfToken: req.csrfToken(),
         propiedades: propiedades
     });
 };
@@ -225,15 +227,58 @@ const guardarCambios = async (req,res) => {
             lng: lng,
             precioId: precio,
             categoriaId: categoria,
-        })
+        });
 
-        await propiedad.save()
+        await propiedad.save();
 
-        res.redirect("/mis-propiedades")
+        res.redirect("/mis-propiedades");
 
     } catch (error) {
-        console.log(error)
+        console.log(error);
     }
+}
+
+const eliminar = async (req,res) => {
+    const { usuario } = req;
+    const { id } = req.params;
+
+    //Validar que la propiedad exista
+    const propiedad = await Propiedad.findByPk(id);
+    if(!propiedad){
+        return res.redirect("/mis-propiedades")
+    };
+
+    //Revisar que el usuario sea el que creó la propiedad
+    if(usuario.id.toString() !== propiedad.usuarioId.toString()){
+        return res.redirect("/mis-propiedades")
+    };
+
+    //Eliminar la imagen
+    await unlink(`public/uploads/${propiedad.imagen}`)
+
+    //Eliminar propiedad
+    await propiedad.destroy()
+    res.redirect("/mis-propiedades")
+}
+
+const mostrarPropiedad = async (req,res) => {
+    const { id } = req.params;
+
+    const propiedad = await Propiedad.findByPk(id, {
+        include: [
+            { model: Categoria}, 
+            { model: Precio}
+        ]
+    }); 
+    if(!propiedad){
+        return res.redirect("/404")
+    };
+    
+
+    res.render("propiedades/mostrar", {
+        propiedad: propiedad,
+        pagina: propiedad.titulo
+    })
 }
 
 export {
@@ -243,5 +288,7 @@ export {
     agregarImagen,
     almacenarImagen,
     editar,
-    guardarCambios
+    guardarCambios,
+    eliminar,
+    mostrarPropiedad
 };
