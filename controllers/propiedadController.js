@@ -5,21 +5,49 @@ import { unlink } from "node:fs/promises"
 
 const admin = async (req,res) => {
     const { usuario } = req;
+    const { pagina: paginaActual } = req.query; // Para el paginado, asi se renombra una variable
 
-    const propiedades = await Propiedad.findAll({
-        where: { 
-            usuarioId: usuario.id 
-        }, include: [
-            { model: Categoria}, // se le puede agregar esto : , as: "categoria" (para llamarlo como queramos)
-            { model: Precio}
-        ]
-    })
+    const expresion = /^[1-9]$/  //regex el ^ y $ significa que tiene que empezar y terminar con numeros
 
-    res.render("propiedades/admin", {
-        pagina: "Mis Propiedades",
-        csrfToken: req.csrfToken(),
-        propiedades: propiedades
-    });
+    //Devuelve true o false. Es una funcion de regex
+    if(!expresion.test(paginaActual)){
+        return res.redirect("/mis-propiedades?pagina=1" )
+    }
+
+    try {
+
+        //Limites del Paginado
+        const limit = 3
+        const offset = (paginaActual * limit) - limit
+
+        const [ propiedades , total ] = await Promise.all([
+             Propiedad.findAll({
+                limit: limit,
+                offset: offset,
+                where: { 
+                    usuarioId: usuario.id 
+                }, include: [
+                    { model: Categoria}, // se le puede agregar esto : , as: "categoria" (para llamarlo como queramos)
+                    { model: Precio}
+                ]
+            }),
+            Propiedad.count({ where: { usuarioId: usuario.id } }) // Para contar la cantidad de propiedades totales
+        ])
+    
+        res.render("propiedades/admin", {
+            pagina: "Mis Propiedades",
+            csrfToken: req.csrfToken(),
+            propiedades: propiedades,
+            paginaActual: Number(paginaActual),
+            paginas: Math.ceil(total / limit),
+            total: total,
+            offset: offset,
+            limit: limit
+        });
+
+    } catch (error) {
+        console.log(error)
+    }
 };
 
 const crear = async (req,res) => {
@@ -253,9 +281,11 @@ const eliminar = async (req,res) => {
         return res.redirect("/mis-propiedades")
     };
 
-    //Eliminar la imagen
-    await unlink(`public/uploads/${propiedad.imagen}`)
-
+    //Eliminar la imagen. Corregi esto pq si no se subia la imagen por algun error se rompia el server al no
+    //encontrar una imagen
+    if(propiedad.imagen){
+        await unlink(`public/uploads/${propiedad.imagen}`)
+    }
     //Eliminar propiedad
     await propiedad.destroy()
     res.redirect("/mis-propiedades")

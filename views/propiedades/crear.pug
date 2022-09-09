@@ -60,7 +60,7 @@ block contenido
                             label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="estacionamiento") Estacionamiento
                             select#estacionamiento.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(name="estacionamiento")
                                 option(value="") - Seleccione -
-                                - let e = 1;
+                                - let e = 0;
                                     while e < 4
                                         option(value=e selected= datos.estacionamiento ? datos.estacionamiento == e : null) #{e++} 
 
