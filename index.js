@@ -6,6 +6,8 @@ import morgan from "morgan"
 import db from "./config/db.js"
 import usersRoutes from "./routes/usuarioRoutes.js"
 import propiedadesRoutes from "./routes/propiedadesRoutes.js"
+import appRoutes from "./routes/appRoutes.js"
+import apiRoutes from "./routes/apiRoutes.js"
 
 const app = express();
 
@@ -40,9 +42,10 @@ app.set("views", "./views")
 
 app.use( express.static("public"))
 
-
+app.use("/", appRoutes)
 app.use("/auth", usersRoutes)
 app.use("/", propiedadesRoutes)
+app.use("/api", apiRoutes)
 
 
 app.use((err, req, res, next) => {
