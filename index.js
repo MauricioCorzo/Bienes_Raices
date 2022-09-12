@@ -11,6 +11,8 @@ import apiRoutes from "./routes/apiRoutes.js"
 
 const app = express();
 
+app.use(express.json())
+
 //Habilitar lecturas de datos para formularios
 app.use(express.urlencoded({extended: true}))
 app.use(cors())
