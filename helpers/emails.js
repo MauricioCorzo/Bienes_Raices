@@ -70,7 +70,7 @@ const envioDeMensaje = async (data) => {
         html: `<p>Hola ${name}, Has recibido un Mensaje en BienesRaices de ${enviador}, sobre la propiedad: "${nombrePropiedad}".</p>
         <p> Si quieres leer el mensaje, revisalo en tu cuenta dando click en el siguiente enlace:
         <a href="${process.env.BACKEND_URL}/mis-propiedades">Revisa tus mensajes</a> </p>
-        <p> Si tu no solicitaste el cambio de contraseña, puedes ignorar este mensaje</p>
+        <p> Si tú no solicitaste el cambio de contraseña, puedes ignorar este mensaje</p>
         `
     })
     console.log("Mensaje enviado: %s", info.messageId)
