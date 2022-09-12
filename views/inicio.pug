@@ -10,8 +10,44 @@ block contenido
         div(class="flex flex-col md:flex-row items-center py-10 gap-4")
             h2(class="text-sm uppercase text-gray-800 font-bold") Filtrar Propiedades:
 
+            div(class="w-full md:w-auto flex items-center gap-2")
+                label(for="categorias" class="text-sm w-24 uppercase text-gray-500 font-bold") Categorias 
+                select(id="categorias" class="flex-1 bg-white w-full py-2 px-3 border border-gray-300 roundend-md shadow") 
+                    option(value="") - Seleccione - 
+                    each categoria in categorias 
+                        option(value= categoria.nombre)= categoria.nombre
+
+            div(class="w-full md:w-auto flex items-center gap-2")
+                label(for="precios" class="text-sm w-24 uppercase text-gray-500 font-bold") Precios 
+                select(id="precios" class="flex-1 bg-white w-full py-2 px-3 border border-gray-300 roundend-md shadow") 
+                    option(value="") - Seleccione - 
+                    each precio in precios 
+                        option(value= precio.nombre)= precio.nombre 
+
         div(id="mapa-inicio" class="h-[600px] mt-10")
 
+
+        section(class="py-5")
+            h2(class="text-center text-4xl font-extrabold pt-10") Casas en Venta
+
+            //- pre= JSON.stringify(casas, undefined, 2)
+            div(class="grid grid-cols-1 lg:grid-cols-3 gap-5 mt-14")
+                each casa in casas 
+                    div(class="bg-white shadow rounded-lg")
+                        img(class="object-cover h-72 w-full" src=`/uploads/${casa.imagen}`, alt=`Imagen casa ${casa.titulo}`)
+                        div(class="p-5 space-y-3")
+
+                            h3(class="text-2xl font-bold")= casa.titulo
+                            p(class="text-sm text-gray-600") Habitaciones: 
+                                span(class="text-gray-800 font-bold")= casa.habitaciones
+
+                            p(class="text-sm text-gray-600") Baños:  
+                                span(class="text-gray-800 font-bold")= casa.wc    
+
+                            p(class="text-sm text-gray-600") Precio:  
+                                span(class="text-gray-800 font-bold")= casa.precio.nombre
+
+                            a(href=`/propiedad/${casa.id}` class="bg-indigo-600 w-full text-center block font-bold uppercase text-white p-2 rounded") Ver Propiedad  
 block scripts
     script(src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js")
     script(src="/js/mapaInicio.js")           

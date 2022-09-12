@@ -5,16 +5,42 @@
 
     //Los Pines que se van a mostar en el mapa de la pagina principal
     let markers = new L.FeatureGroup().addTo(mapa)
-
+    
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(mapa);
+
+
+    //Lo lleno en la funcion de abajo ObtenerPropiedades()
+    let propiedades = [];
+
+    //Filtros
+    const categoriasSelect = document.querySelector("#categorias")
+    const preciosSelect = document.querySelector("#precios")
+
+    const filtros = {
+        categoria: "",
+        precio: ""
+    }
+
+
+    categoriasSelect.addEventListener("change", (e) => {
+        filtros.categoria = e.target.value
+        filtrarPropiedades()
+    })
+
+    preciosSelect.addEventListener("change", (e) => {
+        filtros.precio = e.target.value
+        filtrarPropiedades()
+    })
+
     
-    const obtenertPropiedades = async () => {
+    const obtenerPropiedades = async () => {
         try {
             const url = "/api/propiedades"
             const respuesta = await fetch(url)
-            const propiedades = await respuesta.json()
+            //Lo almaceno en el array propiedades de arriba
+            propiedades = await respuesta.json()
             
             mostrarPropiedades(propiedades)
             
@@ -24,6 +50,9 @@
     }
     
     const mostrarPropiedades = (propiedades) => {
+
+        //Limpiar los markers previos
+        markers.clearLayers()
         
         for(let p of propiedades){
              //Agregar los pines
@@ -40,7 +69,27 @@
             markers.addLayer(marker)
         }
     }
+
+    const filtrarPropiedades = () => {
+        const resultado = propiedades.filter( filtrarCategoria ).filter( filtrarPrecio )
+        
+        mostrarPropiedades(resultado) //En resultado estan las propiedades filtradas
+    }
+
+    const filtrarCategoria = (propiedad) => {
+        if(filtros.categoria){
+            return propiedad.categoria.nombre === filtros.categoria
+        }
+        return propiedad
+    }
+
+    const filtrarPrecio = (propiedad) => {
+        if(filtros.precio){
+            return propiedad.precio.nombre === filtros.precio
+        }
+        return propiedad
+    }
     
-    obtenertPropiedades()
+    obtenerPropiedades()
 
 })()
