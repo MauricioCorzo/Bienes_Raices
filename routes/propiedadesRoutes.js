@@ -1,8 +1,9 @@
 import express  from "express";
 import { body } from "express-validator" // Es la validacion en el router y no en el controlador. Aqui se usa body, en el controller se usa check
-import { admin, agregarImagen, almacenarImagen, crear, editar, eliminar, guardar, guardarCambios, mostrarPropiedad } from "../controllers/propiedadController.js";
+import { admin, agregarImagen, almacenarImagen, crear, editar, eliminar, enviarMensaje, guardar, guardarCambios, mostrarPropiedad, verMensajes } from "../controllers/propiedadController.js";
 import protegerRuta from "../middleware/protegerRuta.js";
 import upload from "../middleware/subirImagen.js";
+import identificarUsuario from "../middleware/identificarUsuario.js";
 
 const propiedadesRoutes = express.Router()
 
@@ -39,6 +40,13 @@ propiedadesRoutes.post("/propiedades/editar/:id", protegerRuta,
 propiedadesRoutes.post("/propiedades/eliminar/:id", protegerRuta, eliminar) 
 
 //Area publica
-propiedadesRoutes.get("/propiedad/:id", mostrarPropiedad)
+propiedadesRoutes.get("/propiedad/:id", identificarUsuario, mostrarPropiedad)
+
+//Almacenar los mensajes
+propiedadesRoutes.post("/propiedad/:id", identificarUsuario,
+    body("mensaje").isLength({min:20}).withMessage("El Mensaje no puede ir vacio o es muy corto"),
+    enviarMensaje)
+
+propiedadesRoutes.get("/mensajes/:id", protegerRuta, verMensajes )
 
 export default propiedadesRoutes
