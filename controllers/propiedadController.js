@@ -2,6 +2,7 @@ import { Propiedad , Precio , Categoria, Mensaje, Usuario} from "../models/index
 import { validationResult } from "express-validator"
 import { unlink } from "node:fs/promises"
 import { esVendedor , formatearFecha } from "../helpers/index.js";
+import { envioDeMensaje } from "../helpers/emails.js";
 
 
 const admin = async (req,res) => {
@@ -300,7 +301,8 @@ const mostrarPropiedad = async (req,res) => {
         const propiedad = await Propiedad.findByPk(id, {
             include: [
                 { model: Categoria}, 
-                { model: Precio}
+                { model: Precio},
+                { model: Usuario.scope("eliminarPassword") }
             ]
         });
         
@@ -328,7 +330,8 @@ const enviarMensaje = async (req,res) => {
         const propiedad = await Propiedad.findByPk(id, {
             include: [
                 { model: Categoria}, 
-                { model: Precio}
+                { model: Precio},
+                { model: Usuario.scope("eliminarPassword") }
             ]
         });
         
@@ -355,6 +358,13 @@ const enviarMensaje = async (req,res) => {
             mensaje: req.body.mensaje,
             usuarioId: req.usuario.id,
             propiedadId: req.params.id
+        })
+
+        envioDeMensaje({
+            email: propiedad.usuario.email,
+            nombre: propiedad.usuario.nombre,
+            enviador: req.usuario.email,
+            nombrePropiedad: propiedad.titulo 
         })
 
         res.render("propiedades/mostrar", {

@@ -51,7 +51,35 @@ const emailOlvidePassword = async (data) => {
     console.log("Mensaje enviado: %s", info.messageId)
 }
 
+const envioDeMensaje = async (data) => {
+    const transport = nodemailer.createTransport({
+      host: process.env.EMAIL_HOST,
+      port: process.env.EMAIL_PORT,
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+      }
+    });
+  
+    const {email,name, enviador, nombrePropiedad} = data
+    const info = await transport.sendMail({
+        from: "BienesRaices.com",
+        to: email,
+        subject: "Has recibido un Mensaje en BienesRaices.com",
+        text: "Has recibido un Mensaje en BienesRaices.com",
+        html: `<p>Hola ${name}, Has recibido un Mensaje en BienesRaices de ${enviador}, sobre la propiedad: "${nombrePropiedad}".</p>
+        <p> Si quieres leer el mensaje, revisalo en tu cuenta dando click en el siguiente enlace:
+        <a href="${process.env.BACKEND_URL}/mis-propiedades">Revisa tus mensajes</a> </p>
+        <p> Si tu no solicitaste el cambio de contraseña, puedes ignorar este mensaje</p>
+        `
+    })
+    console.log("Mensaje enviado: %s", info.messageId)
+
+}
+
+
 export {
     emailRegistro,
-    emailOlvidePassword
+    emailOlvidePassword,
+    envioDeMensaje
 }
