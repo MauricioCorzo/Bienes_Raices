@@ -8,6 +8,7 @@ import usersRoutes from "./routes/usuarioRoutes.js"
 import propiedadesRoutes from "./routes/propiedadesRoutes.js"
 import appRoutes from "./routes/appRoutes.js"
 import apiRoutes from "./routes/apiRoutes.js"
+import { importarDatos } from "./seed/seeder.js"
 
 const app = express();
 
@@ -57,6 +58,8 @@ app.use((err, req, res, next) => {
   console.error(err);
   res.status(status).send({ message });
 });
+
+importarDatos()
 
 const PORT = process.env.PORT || 3000
 
