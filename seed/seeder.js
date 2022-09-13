@@ -14,12 +14,20 @@ const importarDatos = async () => {
         //Generar columnas
         await db.sync()
         // Insertar datos
-        await Promise.all([Categoria.bulkCreate(categorias), Precio.bulkCreate(precios), Usuario.bulkCreate(usuarios)])
-        console.log("Categorias y Precios creadas correctamente")
-        process.exit()
+        const [c, p] = await Promise.all([Categoria.findAll(), Precio.findAll()])
+        if(c.length > 0 || p.length > 0) {
+            console.log("Categorias y Precios ya existen")
+            // process.exit()
+            return
+        } else {
+            await Promise.all([Categoria.bulkCreate(categorias), Precio.bulkCreate(precios), Usuario.bulkCreate(usuarios)])
+            console.log("Categorias y Precios creadas correctamente")
+            // process.exit()
+
+        }
     } catch (error) {
         console.log(error)
-        process.exit(1)
+        // process.exit(1)
     }
 }
 
@@ -32,10 +40,11 @@ const eliminarDatos = async () => {
         // ])
         await db.sync({force:true}) //Hace el mismo trabajo que arriba. Esto eliminaria todo, en la de arriba solo lo que le pasamos que elimine
         console.log("Categorias y Precios eliminadas correctamente")
-        process.exit()
+        // process.exit()
+        return
     } catch (error) {
         console.log(error)
-        process.exit(1)
+        // process.exit(1)
     }
 }
 
@@ -45,3 +54,7 @@ if(process.argv[2] === "-i"){
 if(process.argv[2] === "-e"){
     eliminarDatos();
 }
+
+ export {
+    importarDatos
+ }
