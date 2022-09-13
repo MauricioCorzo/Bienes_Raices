@@ -9,7 +9,7 @@ block contenido
 
         div(class="flex flex-col md:flex-row items-center py-10 gap-4")
             h2(class="text-sm uppercase text-gray-800 font-bold") Filtrar Propiedades:
-
+            
             div(class="w-full md:w-auto flex items-center gap-2")
                 label(for="categorias" class="text-sm w-24 uppercase text-gray-500 font-bold") Categorias 
                 select(id="categorias" class="flex-1 bg-white w-full py-2 px-3 border border-gray-300 roundend-md shadow") 
@@ -23,6 +23,9 @@ block contenido
                     option(value="") - Seleccione - 
                     each precio in precios 
                         option(value= precio.nombre)= precio.nombre 
+                        
+            if usuario 
+                a(href="/mis-propiedades" class="rounded py-2 px-10 mx-10 bg-indigo-600 hover:bg-indigo-700 text-sm font-bold text-center text-white uppercase my-5 inline-block w-full sm:w-auto") Mis Propiedades            
 
         div(id="mapa-inicio" class="h-[600px] mt-10")
 

@@ -19,7 +19,7 @@ const admin = async (req,res) => {
     try {
 
         //Limites del Paginado
-        const limit = 3
+        const limit = 5
         const offset = (paginaActual * limit) - limit
 
         const [ propiedades , total ] = await Promise.all([

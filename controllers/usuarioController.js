@@ -63,7 +63,7 @@ const autenticar = async (req,res) => {
     httpOnly: true,
     // secure: true,
     // SameSite: true,
-  }).redirect("/mis-propiedades")
+  }).redirect("/")
 
     } catch (error) {
       console.log(error)

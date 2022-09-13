@@ -10,13 +10,13 @@ const emailRegistro = async (data) => {
         }
       });
 
-    const {email,name,token} = data
+    const {email,nombre,token} = data
     const info = await transport.sendMail({
         from: "BienesRaices.com",
         to: email,
         subject: "Comprueba tu cuenta en BienesRaices",
         text: "Comprueba tu cuenta en BienesRaices",
-        html: `<p>Hola ${name}, comprueba tu cuenta en BienesRaices.</p>
+        html: `<p>Hola ${nombre}, comprueba tu cuenta en BienesRaices.</p>
         <p> Tu cuenta ya esta lista, solo debes comprobarla en el siguiente enlace:
         <a href="${process.env.BACKEND_URL}/auth/confirmar/${token}">Comprobar Cuenta</a> </p>
         <p> Si tu no creaste esta cuenta puedes ignorar este mensaje</p>
@@ -36,13 +36,13 @@ const emailOlvidePassword = async (data) => {
         }
       });
 
-    const {email,name,token} = data
+    const {email,nombre,token} = data
     const info = await transport.sendMail({
         from: "BienesRaices.com",
         to: email,
         subject: "Recupera tu contraseña en BienesRaices",
         text: "Recupera tu contraseña en BienesRaices",
-        html: `<p>Hola ${name}, Recupera tu contraseña en BienesRaices.</p>
+        html: `<p>Hola ${nombre}, Recupera tu contraseña en BienesRaices.</p>
         <p> Seras redirigido a un formulario para generar una nueva contraseña en el siguiente enlace:
         <a href="${process.env.BACKEND_URL}/auth/olvide-password/${token}">Recuperar Contraseña</a> </p>
         <p> Si tu no solicitaste el cambio de contraseña, puedes ignorar este mensaje</p>
@@ -61,13 +61,13 @@ const envioDeMensaje = async (data) => {
       }
     });
   
-    const {email,name, enviador, nombrePropiedad} = data
+    const {email,nombre, enviador, nombrePropiedad} = data
     const info = await transport.sendMail({
         from: "BienesRaices.com",
         to: email,
         subject: "Has recibido un Mensaje en BienesRaices.com",
         text: "Has recibido un Mensaje en BienesRaices.com",
-        html: `<p>Hola ${name}, Has recibido un Mensaje en BienesRaices de ${enviador}, sobre la propiedad: "${nombrePropiedad}".</p>
+        html: `<p>Hola ${nombre}, Has recibido un Mensaje en BienesRaices de ${enviador}, sobre la propiedad: "${nombrePropiedad}".</p>
         <p> Si quieres leer el mensaje, revisalo en tu cuenta dando click en el siguiente enlace:
         <a href="${process.env.BACKEND_URL}/mis-propiedades">Revisa tus mensajes</a> </p>
         <p> Si tú no solicitaste el cambio de contraseña, puedes ignorar este mensaje</p>

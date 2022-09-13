@@ -1,11 +1,12 @@
 import express from "express";
 import { inicio , categoria , buscador , noEncontrado } from "../controllers/appController.js"
+import identificarUsuario from "../middleware/identificarUsuario.js";
 
 const appRoutes = express.Router()
 
 
 //Pagina de Inicio
-appRoutes.get("/", inicio)
+appRoutes.get("/", identificarUsuario, inicio)
 
 //Categorias
 appRoutes.get("/categorias/:id", categoria)

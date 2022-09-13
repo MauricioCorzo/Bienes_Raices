@@ -2,6 +2,8 @@ import { Op } from "sequelize"
 import { Precio, Categoria, Propiedad } from "../models/index.js"
 
 const inicio = async (req,res) => {
+
+    const { usuario } = req;
                                                                         //Me trae los datos simplificados
     const [ categorias, precios , casas, departamentos] = await Promise.all([
         Categoria.findAll({raw: true}), 
@@ -34,7 +36,8 @@ const inicio = async (req,res) => {
         precios: precios,
         casas: casas,
         departamentos: departamentos,
-        csrfToken: req.csrfToken()
+        csrfToken: req.csrfToken(),
+        usuario: usuario
     })
 }
 
