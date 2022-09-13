@@ -11,7 +11,8 @@ const inicio = async (req,res) => {
         Propiedad.findAll({
             limit:3, 
             where: {
-                categoriaId: 1 // Categoria de casas
+                categoriaId: 1, // Categoria de casas
+                publicado: true
             },
             include: [
                 {model: Precio}
@@ -51,7 +52,7 @@ const categoria = async (req,res) => {
     }
     
     // Obtener las propiedades de la categoria
-    const propiedades = await Propiedad.findAll({ where: { categoriaId : id }, include: [{model: Precio}] })
+    const propiedades = await Propiedad.findAll({ where: { categoriaId : id , publicado: true}, include: [{model: Precio}] })
 
     res.render("categoria", {
         pagina: categoria.nombre == "Almacen" ? `${categoria.nombre}es en Venta` : `${categoria.nombre}s en Venta`,
@@ -81,7 +82,8 @@ const buscador = async (req,res) => {
         where: {
             titulo: {
                 [Op.iLike] : `%${termino}%`
-            }
+            },
+            publicado: true
         }, 
         include: [{model: Precio}]
     })

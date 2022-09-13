@@ -56,17 +56,20 @@
         
         for(let p of propiedades){
              //Agregar los pines
-             const marker = new L.marker([p?.lat , p?.lng], {
-                autoPan: true
-            }).addTo(mapa).bindPopup(`
-                <p class="text-indigo-600 font-bold">${p?.categoria.nombre}</p>
-                <h1 class="text-xl font-extrabold my-2 uppercase">${p?.titulo}</h1>
-                <img src="/uploads/${p?.imagen}" alt="Imagen de la propiedad ${p?.titulo}"/>
-                <p class="text-gray-600 font-bold">${p?.precio.nombre}</p>
-                <a href="/propiedad/${p?.id}" class="bg-indigo-600 block p-2 text-center font-bold uppercase text-white">Ver Propiedad<a/> 
-            `)
-
-            markers.addLayer(marker)
+             if(p.publicado){
+                const marker = new L.marker([p?.lat , p?.lng], {
+                    autoPan: true
+                }).addTo(mapa).bindPopup(`
+                    <p class="text-indigo-600 font-bold">${p?.categoria.nombre}</p>
+                    <h1 class="text-xl font-extrabold my-2 uppercase">${p?.titulo}</h1>
+                    <img src="/uploads/${p?.imagen}" alt="Imagen de la propiedad ${p?.titulo}"/>
+                    <p class="text-gray-600 font-bold">${p?.precio.nombre}</p>
+                    <a href="/propiedad/${p?.id}" class="bg-indigo-600 block p-2 text-center font-bold uppercase text-white">Ver Propiedad<a/> 
+                `)
+    
+                markers.addLayer(marker)
+             }
+            
         }
     }
 

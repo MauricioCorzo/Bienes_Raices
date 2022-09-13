@@ -63,11 +63,17 @@ const autenticar = async (req,res) => {
     httpOnly: true,
     // secure: true,
     // SameSite: true,
-  }).redirect("/")
+  }).redirect("/mis-propiedades")
 
     } catch (error) {
       console.log(error)
     }
+}
+
+const cerrarSesion = (req,res) => {
+
+  return res.clearCookie("_token").status(200).redirect("/auth/login")
+
 }
 
 const formularioRegistro = (req, res) => {
@@ -281,5 +287,6 @@ export {
     resetearPassword,
     comprobarToken,
     nuevoPassword,
-    autenticar
+    autenticar,
+    cerrarSesion
 }
