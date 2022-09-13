@@ -1,6 +1,6 @@
 import express  from "express";
 import { body } from "express-validator" // Es la validacion en el router y no en el controlador. Aqui se usa body, en el controller se usa check
-import { admin, agregarImagen, almacenarImagen, crear, editar, eliminar, enviarMensaje, guardar, guardarCambios, mostrarPropiedad, verMensajes } from "../controllers/propiedadController.js";
+import { admin, agregarImagen, almacenarImagen, crear, editar, eliminar, cambiarEstado, enviarMensaje, guardar, guardarCambios, mostrarPropiedad, verMensajes } from "../controllers/propiedadController.js";
 import protegerRuta from "../middleware/protegerRuta.js";
 import upload from "../middleware/subirImagen.js";
 import identificarUsuario from "../middleware/identificarUsuario.js";
@@ -37,7 +37,9 @@ propiedadesRoutes.post("/propiedades/editar/:id", protegerRuta,
     body("lat").notEmpty().withMessage("Ubica la propiedad en el mapa"),
     guardarCambios)
 
-propiedadesRoutes.post("/propiedades/eliminar/:id", protegerRuta, eliminar) 
+propiedadesRoutes.post("/propiedades/eliminar/:id", protegerRuta, eliminar)
+
+propiedadesRoutes.put("/propiedades/:id", protegerRuta, cambiarEstado)
 
 //Area publica
 propiedadesRoutes.get("/propiedad/:id", identificarUsuario, mostrarPropiedad)
