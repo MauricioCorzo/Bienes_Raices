@@ -34,7 +34,7 @@ app.use((req, res, next) => {
 //Conexion a la database
 try {
     await db.authenticate()
-    db.sync({force: false})
+    await db.sync({force: false})
     console.log("Conexion correcta a la base de datos")
 } catch (error) {
     console.log(error)
