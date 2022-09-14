@@ -15,17 +15,12 @@ const db =  new Sequelize(`${process.env.DB_NAME}`, `${process.env.DB_USER}`, `$
       min: 1,
       idle: 10000,
     },
-    dialectOptions: {
-      ssl: {
-        require: true,
-        rejectUnauthorized: false,
-      },
-      keepAlive: true,
-    },
-    ssl: true,
     operatorAliases: false,
     logging: false, // Para que no aparezcan los msg de SQL en la consola
-    native:false
+    native:false,
+    dialectOptions:{
+      keepAlive: true
+    }
 })
 
 export default db
