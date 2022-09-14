@@ -136,7 +136,7 @@ const registrar = async (req,res) => {
       //Mostrar msj
       res.render("templates/mensaje" , {
         pagina: "Cuenta creada Correctamente",
-        mensaje: "Hemos enviado un email. Revisa tu correo"
+        mensaje: "Hemos enviado un email. Revisa tu correo. Puede tardar unos minutos"
       })
      
     } catch (error) {
@@ -214,7 +214,7 @@ const resetearPassword = async (req,res) => {
 
       res.render("templates/mensaje" , {
         pagina: "Restablece tu Contraseña",
-        mensaje: "Hemos enviado un email. Revisa tu correo"
+        mensaje: "Hemos enviado un email. Revisa tu correo. Puede tardar unos minutos"
       })
 
     } catch(error) {
