@@ -23,7 +23,7 @@ const importarDatos = async () => {
             await Promise.all([Categoria.bulkCreate(categorias), Precio.bulkCreate(precios), Usuario.bulkCreate(usuarios)])
             console.log("Categorias y Precios creadas correctamente")
             // process.exit()
-
+            return
         }
     } catch (error) {
         console.log(error)
