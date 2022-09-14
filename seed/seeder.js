@@ -1,10 +1,11 @@
 import categorias from "./categorias.js";
 import precios from "./precios.js";
 import usuarios from "./usuarios.js";
+import propiedades from "./propiedades.js";
 // import Categoria from "../models/Categoria.js";
 // import Precio from "../models/Precio.js"
 import db from "../config/db.js";
-import { Categoria , Precio, Usuario } from "../models/index.js"
+import { Categoria , Precio, Usuario , Propiedad} from "../models/index.js"
 
 //Lo mandamos a llamar desde package.json
 const importarDatos = async () => {
@@ -12,19 +13,19 @@ const importarDatos = async () => {
         //Autenticar
         await db.authenticate()
         //Generar columnas
-        await db.sync()
+        await db.sync({force: true})
         // Insertar datos
-        const [c, p] = await Promise.all([Categoria.findAll(), Precio.findAll()])
-        if(c.length > 0 || p.length > 0) {
-            console.log("Categorias y Precios ya existen")
-            // process.exit()
-            return
-        } else {
-            await Promise.all([Categoria.bulkCreate(categorias), Precio.bulkCreate(precios), Usuario.bulkCreate(usuarios)])
+        // const [c, p] = await Promise.all([Categoria.findAll(), Precio.findAll()])
+        // if(c.length > 0 || p.length > 0) {
+        //     console.log("Categorias y Precios ya existen")
+        //     // process.exit()
+        //     return
+        // } else {
+            await Promise.all([Categoria.bulkCreate(categorias), Precio.bulkCreate(precios), Usuario.bulkCreate(usuarios), Propiedad.bulkCreate(propiedades)])
             console.log("Categorias y Precios creadas correctamente")
             // process.exit()
             return
-        }
+        //  }
     } catch (error) {
         console.log(error)
         // process.exit(1)
