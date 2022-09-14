@@ -4,12 +4,12 @@ import dotenv from "dotenv"
 dotenv.config({path: '.env'})
 
 const db = process.env.NODE_ENV === "production"? new Sequelize({
-  database:DB_NAME,
+  database:process.env.DB_NAME,
   dialect: "postgres",
-  host: DB_HOST,
+  host: process.env.DB_HOST,
   port: "5432",
-  username: DB_USER,
-  password: DB_PASSWORD,
+  username: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
   pool: {
     max: 3,
     min: 1,
