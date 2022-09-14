@@ -10,7 +10,8 @@ const emailRegistro = async (data) => {
     //       pass: process.env.EMAIL_PASS
     //     }
     //   });
-    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+    try {
+        sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
     const {email,nombre,token} = data
     const msg =  {
@@ -26,6 +27,9 @@ const emailRegistro = async (data) => {
     }
     await sgMail.send(msg)
     console.log(`Mensaje enviado correctamente a ${email}`)
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 
@@ -38,7 +42,8 @@ const emailOlvidePassword = async (data) => {
     //       pass: process.env.EMAIL_PASS
     //     }
     //   });
-    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+    try {
+        sgMail.setApiKey(process.env.SENDGRID_API_KEY);
     const {email,nombre,token} = data
     const msg = {
         from: "bienes_raices@gmailni.com",
@@ -53,6 +58,9 @@ const emailOlvidePassword = async (data) => {
     }
     await sgMail.send(msg)
     console.log(`Mensaje enviado correctamente a ${email}`)
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 const envioDeMensaje = async (data) => {
@@ -65,7 +73,8 @@ const envioDeMensaje = async (data) => {
     //   }
     // });
 
-    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+    try {
+        sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
     const {email,nombre, enviador, nombrePropiedad} = data
     const msg = {
@@ -81,6 +90,9 @@ const envioDeMensaje = async (data) => {
     }
     await sgMail.send(msg)
     console.log(`Mensaje enviado correctamente a ${email}`)
+    } catch (error) {
+        console.log(error)
+    }
 
 }
 
