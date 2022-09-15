@@ -35,6 +35,7 @@ app.use((req, res, next) => {
 try {
     await db.authenticate()
     await db.sync({force: false})
+    importarDatos()
     console.log("Conexion correcta a la base de datos")
 } catch (error) {
     console.log(error)
@@ -59,7 +60,7 @@ app.use((err, req, res, next) => {
   res.status(status).send({ message });
 });
 
-importarDatos()
+
 
 const PORT = process.env.PORT || 3000
 
