@@ -4,7 +4,8 @@ import { Precio, Categoria, Propiedad } from "../models/index.js"
 const inicio = async (req,res) => {
 
     const { usuario } = req;
-                                                                        //Me trae los datos simplificados
+   
+    try {//Me trae los datos simplificados
     const [ categorias, precios , casas, departamentos] = await Promise.all([
         Categoria.findAll({raw: true}), 
         Precio.findAll({raw:true}), 
@@ -40,8 +41,10 @@ const inicio = async (req,res) => {
         csrfToken: req.csrfToken(),
         usuario: usuario
     })
+  } catch (error){
+      console.log(error)
+ }
 }
-
 const categoria = async (req,res) => {
     const { id } = req.params;
 
