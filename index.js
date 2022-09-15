@@ -34,8 +34,8 @@ app.use((req, res, next) => {
 //Conexion a la database
 try {
     await db.authenticate()
-    await db.sync({force: false})
-    importarDatos()
+    await db.sync({force: true})
+    await importarDatos()  // Crea las propiedades que se muestran al inicio
     console.log("Conexion correcta a la base de datos")
 } catch (error) {
     console.log(error)

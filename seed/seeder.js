@@ -11,9 +11,9 @@ import { Categoria , Precio, Usuario , Propiedad} from "../models/index.js"
 const importarDatos = async () => {
     try {
         //Autenticar
-        await db.authenticate()
+        // await db.authenticate()
         //Generar columnas
-        await db.sync({force: true})
+        // await db.sync({force: true})
         // Insertar datos
         // const [c, p] = await Promise.all([Categoria.findAll(), Precio.findAll()])
         // if(c.length > 0 || p.length > 0) {
