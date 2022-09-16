@@ -408,7 +408,8 @@ const enviarMensaje = async (req,res) => {
 const verMensajes = async (req,res) => {
     const { id } = req.params;
     const { usuario } = req
-
+    
+    try {
     //Validar que la propiedad exista
     const propiedad = await Propiedad.findByPk(id, { 
         include: [ 
@@ -436,6 +437,9 @@ const verMensajes = async (req,res) => {
         mensajes: propiedad.mensajes,
         formatearFecha: formatearFecha
     })
+    } catch (error) {
+     console.log(error)   
+    }
 }
 
 export {
