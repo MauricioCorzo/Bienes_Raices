@@ -432,6 +432,7 @@ const verMensajes = async (req,res) => {
 
     res.render("propiedades/mensajes", {
         pagina: "Mensajes",
+        csrfToken: req.csrfToken(),
         mensajes: propiedad.mensajes,
         formatearFecha: formatearFecha
     })
