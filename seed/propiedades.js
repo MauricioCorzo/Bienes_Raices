@@ -9,7 +9,7 @@ const propiedades = [
         habitaciones: 2,
         estacionamiento: 1,
         wc: 2,
-        precioId: 4,
+        precioId: 1,
         categoriaId: 1,
         usuarioId: 1,
         publicado: true
@@ -24,7 +24,7 @@ const propiedades = [
         habitaciones: 2,
         estacionamiento: 1,
         wc: 2,
-        precioId: 4,
+        precioId: 1,
         categoriaId: 2,
         usuarioId: 1,
         publicado: true
@@ -39,7 +39,7 @@ const propiedades = [
         habitaciones: 2,
         estacionamiento: 1,
         wc: 2,
-        precioId: 4,
+        precioId: 2,
         categoriaId: 5,
         usuarioId: 1,
         publicado: true
@@ -54,7 +54,7 @@ const propiedades = [
         habitaciones: 2,
         estacionamiento: 1,
         wc: 2,
-        precioId: 4,
+        precioId: 2,
         categoriaId: 4,
         usuarioId: 1,
         publicado: true
@@ -69,7 +69,7 @@ const propiedades = [
         habitaciones: 2,
         estacionamiento: 1,
         wc: 2,
-        precioId: 4,
+        precioId: 3,
         categoriaId: 2,
         usuarioId: 1,
         publicado: true
@@ -84,7 +84,7 @@ const propiedades = [
         habitaciones: 2,
         estacionamiento: 1,
         wc: 2,
-        precioId: 4,
+        precioId: 3,
         categoriaId: 3,
         usuarioId: 2,
         publicado: true
@@ -129,7 +129,7 @@ const propiedades = [
         habitaciones: 2,
         estacionamiento: 1,
         wc: 2,
-        precioId: 4,
+        precioId: 5,
         categoriaId: 5,
         usuarioId: 2,
         publicado: true
@@ -144,7 +144,7 @@ const propiedades = [
         habitaciones: 2,
         estacionamiento: 1,
         wc: 2,
-        precioId: 4,
+        precioId: 5,
         categoriaId: 1,
         usuarioId: 2,
         publicado: true
@@ -159,7 +159,7 @@ const propiedades = [
         habitaciones: 2,
         estacionamiento: 1,
         wc: 2,
-        precioId: 4,
+        precioId: 6,
         categoriaId: 1,
         usuarioId: 3,
         publicado: true
@@ -174,7 +174,7 @@ const propiedades = [
         habitaciones: 2,
         estacionamiento: 1,
         wc: 2,
-        precioId: 4,
+        precioId: 6,
         categoriaId: 1,
         usuarioId: 3,
         publicado: true
@@ -189,7 +189,7 @@ const propiedades = [
         habitaciones: 2,
         estacionamiento: 1,
         wc: 2,
-        precioId: 4,
+        precioId: 7,
         categoriaId: 1,
         usuarioId: 3,
         publicado: true
@@ -204,7 +204,7 @@ const propiedades = [
         habitaciones: 2,
         estacionamiento: 1,
         wc: 2,
-        precioId: 4,
+        precioId: 8,
         categoriaId: 1,
         usuarioId: 3,
         publicado: true
@@ -219,7 +219,7 @@ const propiedades = [
         habitaciones: 2,
         estacionamiento: 1,
         wc: 2,
-        precioId: 4,
+        precioId: 8,
         categoriaId: 1,
         usuarioId: 3,
         publicado: true
@@ -234,7 +234,7 @@ const propiedades = [
         habitaciones: 2,
         estacionamiento: 1,
         wc: 2,
-        precioId: 4,
+        precioId: 9,
         categoriaId: 1,
         usuarioId: 3,
         publicado: true
@@ -249,7 +249,7 @@ const propiedades = [
         habitaciones: 2,
         estacionamiento: 1,
         wc: 2,
-        precioId: 4,
+        precioId: 9,
         categoriaId: 1,
         usuarioId: 3,
         publicado: true
