@@ -109,7 +109,7 @@ const registrar = async (req,res) => {
         })
       }  
 
-      // Verficar usuarios duplicapos
+      // Verficar usuarios duplicados
       const usuarioExiste = await Usuario.findOne({where: { email: email}})
       
       if(usuarioExiste){
