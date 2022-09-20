@@ -22,25 +22,3 @@ const db =  new Sequelize(`${process.env.DB_NAME}`, `${process.env.DB_USER}`, `$
 })
 
 export default db
-
-// process.env.NODE_ENV === "production"? new Sequelize({
-//   database:process.env.DB_NAME,
-//   dialect: "postgres",
-//   host: process.env.DB_HOST,
-//   port: "5432",
-//   username: process.env.DB_USER,
-//   password: process.env.DB_PASSWORD,
-//   pool: {
-//     max: 3,
-//     min: 1,
-//     idle: 10000,
-//   },
-//   dialectOptions: {
-//     ssl: {
-//       require: true,
-//       rejectUnauthorized: false,
-//     },
-//     keepAlive: true,
-//   },
-//   ssl: true,
-// }) :
