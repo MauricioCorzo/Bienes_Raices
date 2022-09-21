@@ -10,6 +10,7 @@ const emailRegistro = async (data) => {
     //       pass: process.env.EMAIL_PASS
     //     }
     //   });
+    // Emails Reales
     try {
         sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
