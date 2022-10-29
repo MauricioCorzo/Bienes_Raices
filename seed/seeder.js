@@ -2,8 +2,8 @@ import categorias from "./categorias.js";
 import precios from "./precios.js";
 import usuarios from "./usuarios.js";
 import propiedades from "./propiedades.js";
-// import Categoria from "../models/Categoria.js"
-// import Precio from "../models/Precio.js"
+// import Categoria from "../models/Categoria.js";
+// import Precio from "../models/Precio.js";
 import db from "../config/db.js";
 import { Categoria , Precio, Usuario , Propiedad} from "../models/index.js"
 
